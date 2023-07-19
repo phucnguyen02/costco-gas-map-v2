@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Map from "./components/Map";
 import Loader from "./components/Loader";
+import Header from "./components/Header";
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 import axios from "axios";
@@ -21,14 +22,16 @@ function App() {
       let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${address},+${city},+${state}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
       const response = await axios.get(url)
       const data = response.data.results[0]
-      const coordinates = {
+      const info = {
           name: data.formatted_address,
           position: {
               lat: data.geometry.location.lat,
               lng: data.geometry.location.lng
-          }
+          },
+          regular_gas: location.Regular_Gas,
+          premium_gas: location.Premium_Gas
       }
-      return coordinates;
+      return info;
     }
 
     const fetchEvents = async () => {
@@ -44,6 +47,7 @@ function App() {
   }, [])
   return (
     <div>
+      <Header/>
       { !loading ? <Map coords = {coords} /> : <Loader/>}
     </div>
   );
