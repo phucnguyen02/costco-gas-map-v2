@@ -1,26 +1,36 @@
 import React, {useState} from 'react'
 import GoogleMapReact from 'google-map-react'
-import LocationMarker from './LocationMarker';
 import LocationInfoBox from './LocationInfoBox';
 
 function Map({coords, center, zoom}) {
     const [locationInfo, setLocationInfo] = useState(null);
 
-    const markers = coords.map((elem, idx) => {
-        return <LocationMarker key = {idx} lat = {elem.position.lat} lng = {elem.position.lng} onClick = {() => setLocationInfo({
-            name: elem.name,
-            regular_gas: elem.regular_gas,
-            premium_gas: elem.premium_gas
-        })} />
-    })
+    const renderMarkers = (map, maps) => {
+        let markers = [];
+        coords.forEach((elem, idx) => {
+            let marker = new maps.Marker({
+                position: { lat: elem.position.lat, lng: elem.position.lng },
+                map
+            });
+            marker.addListener("click", () => {
+                setLocationInfo({
+                    name: elem.name,
+                    regular_gas: elem.regular_gas,
+                    premium_gas: elem.premium_gas
+                })
+            })
+            markers.push(marker);
+        })
+        return markers;
+    };
     return (
         <div className='map'>
             <GoogleMapReact
                 bootstrapURLKeys={{key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY}}
                 defaultCenter = { center }
                 defaultZoom = { zoom }
+                onGoogleApiLoaded={({ map, maps }) => renderMarkers(map, maps)}
             >
-                { markers }
             </GoogleMapReact>
             {locationInfo && <LocationInfoBox info = {locationInfo} />}
         </div>
