@@ -1,4 +1,5 @@
 import React from 'react'
+import './LocationInfoBox.css'
 
 function LocationInfoBox({ info, regular }) {
   return (

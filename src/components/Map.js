@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import GoogleMapReact from 'google-map-react'
 import LocationInfoBox from './LocationInfoBox';
+import './Map.css'
 
 function Map({coords, center, zoom, regular}) {
     const [locationInfo, setLocationInfo] = useState(null);

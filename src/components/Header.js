@@ -1,5 +1,7 @@
 import React from 'react'
 import { Icon } from '@iconify/react'
+import './Header.css'
+import ReactSwitch from 'react-switch'
 
 function Header({regular, setRegular}) {
   let regularToggle = {
@@ -16,8 +18,8 @@ function Header({regular, setRegular}) {
         <h1><Icon icon = "typcn:location" />Costco Gas Stations Map</h1>
       </div>
       <div className = 'toggle-gas'>
-        <button onClick = {() => setRegular(true)} className = 'toggle-btn' style = {regularToggle}>Regular</button>
-        <button onClick = {() => setRegular(false)} className = 'toggle-btn' style = {premiumToggle}>Premium</button>
+        <h1>Premium:</h1>
+        <ReactSwitch onChange = {() => {setRegular(!regular)}} checked = {regular === false} className = 'toggle-btn'/>
       </div>
     </header>
   )

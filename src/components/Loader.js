@@ -1,5 +1,6 @@
 import React from 'react'
 import spinner from './spinner.gif'
+import './Loader.css'
 
 function Loader() {
   return (
