@@ -13,7 +13,11 @@ const db = getFirestore(app);
 function App() {
   const [coords, setCoords] = useState([])
   const [loading, setLoading] = useState(true)
-  const [regular, setRegular] = useState(true)
+  const [regular, setRegular] = useState(() => {
+    const saved = localStorage.getItem("regular");
+    const initialValue = JSON.parse(saved);
+    return initialValue == null ? true : initialValue
+  })
 
   useEffect(() => {
     async function getGeocode(location){
@@ -46,6 +50,10 @@ function App() {
     
     fetchEvents()
   }, [])
+
+  useEffect(() => {
+    localStorage.setItem("regular", regular);
+  }, [regular])
   return (
     <div>
       <Header regular = {regular} setRegular = {setRegular}/>
