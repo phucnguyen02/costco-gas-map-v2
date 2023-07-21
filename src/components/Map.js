@@ -7,7 +7,7 @@ function Map({coords, center, zoom}) {
 
     const renderMarkers = (map, maps) => {
         let markers = [];
-        coords.forEach((elem, idx) => {
+        coords.forEach((elem) => {
             let marker = new maps.Marker({
                 position: { lat: elem.position.lat, lng: elem.position.lng },
                 map
@@ -23,6 +23,8 @@ function Map({coords, center, zoom}) {
         })
         return markers;
     };
+
+
     return (
         <div className='map'>
             <GoogleMapReact
