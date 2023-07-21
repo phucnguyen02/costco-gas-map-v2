@@ -4,14 +4,6 @@ import './Header.css'
 import ReactSwitch from 'react-switch'
 
 function Header({regular, setRegular}) {
-  let regularToggle = {
-    backgroundColor: regular ? 'yellow' : 'white'
-  }
-
-  let premiumToggle = {
-    backgroundColor: regular ? 'white' : 'yellow'
-  }
-  
   return (
     <header className='header'>
       <div className='title'>
