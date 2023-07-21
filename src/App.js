@@ -13,6 +13,7 @@ const db = getFirestore(app);
 function App() {
   const [coords, setCoords] = useState([])
   const [loading, setLoading] = useState(true)
+  const [regular, setRegular] = useState(true)
 
   useEffect(() => {
     async function getGeocode(location){
@@ -47,8 +48,8 @@ function App() {
   }, [])
   return (
     <div>
-      <Header/>
-      { !loading ? <Map coords = {coords} /> : <Loader/>}
+      <Header regular = {regular} setRegular = {setRegular}/>
+      { !loading ? <Map coords = {coords} regular = {regular} />  : <Loader/>}
     </div>
   );
 }

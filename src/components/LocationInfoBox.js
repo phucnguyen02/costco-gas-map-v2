@@ -1,13 +1,13 @@
 import React from 'react'
+import { isElementOfType } from 'react-dom/test-utils'
 
-function LocationInfoBox({ info }) {
+function LocationInfoBox({ info, regular }) {
   return (
     <div className='location-info'>
         <h2>Warehouse Info</h2>
         <ul>
             <li>Address: <strong>{ info.name }</strong></li>
-            <li>Regular Gas: <strong>{ info.regular_gas}</strong></li>
-            <li>Premium Gas: <strong>{ info.premium_gas}</strong></li>
+            <li>Price: <strong>{ regular ? info.regular_gas : info.premium_gas}</strong></li>
         </ul>
     </div>
   )

@@ -6,13 +6,25 @@ body{
 
 .header{
   padding: 10px;
-  background-color: firebrick;
+  background-color: rgb(34, 118, 178);
   color: #ffff;
   position: fixed;
-  top: 0;
   right: 0;
   left: 0;
   z-index: 100;
+}
+
+.title{
+  float: left;
+}
+
+.toggle-gas{
+  float: right;
+}
+
+.toggle-btn{
+  font-size: 25px;
+  margin-right: 20px;
 }
 
 .header h1{
