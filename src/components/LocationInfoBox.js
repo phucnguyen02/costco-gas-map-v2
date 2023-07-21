@@ -1,5 +1,4 @@
 import React from 'react'
-import { isElementOfType } from 'react-dom/test-utils'
 
 function LocationInfoBox({ info, regular }) {
   return (
