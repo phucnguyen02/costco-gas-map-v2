@@ -13,7 +13,7 @@ const db = getFirestore(app);
 function App() {
   const [coords, setCoords] = useState([])
   const [loading, setLoading] = useState(true)
-  const [regular, setRegular] = useState(() => {
+  const [isRegular, setRegular] = useState(() => {
     const saved = localStorage.getItem("regular");
     const initialValue = JSON.parse(saved);
     return initialValue == null ? true : initialValue
@@ -52,12 +52,12 @@ function App() {
   }, [])
 
   useEffect(() => {
-    localStorage.setItem("regular", regular);
-  }, [regular])
+    localStorage.setItem("regular", isRegular);
+  }, [isRegular])
   return (
     <div>
-      <Header regular = {regular} setRegular = {setRegular}/>
-      { !loading ? <Map coords = {coords} regular = {regular} />  : <Loader/>}
+      <Header isRegular = {isRegular} setRegular = {setRegular}/>
+      { !loading ? <Map coords = {coords} isRegular = {isRegular} />  : <Loader/>}
     </div>
   );
 }

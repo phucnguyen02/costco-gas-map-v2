@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import './Header.css'
 import ReactSwitch from 'react-switch'
 
-function Header({regular, setRegular}) {
+function Header({isRegular, setRegular}) {
   return (
     <header className='header'>
       <div className='title'>
@@ -11,7 +11,7 @@ function Header({regular, setRegular}) {
       </div>
       <div className = 'toggle-gas'>
         <h1>Premium:</h1>
-        <ReactSwitch onChange = {() => {setRegular(!regular)}} checked = {regular === false} className = 'toggle-btn'/>
+        <ReactSwitch onChange = {() => {setRegular(!isRegular)}} checked = {isRegular === false} className = 'toggle-btn'/>
       </div>
     </header>
   )
