@@ -18,7 +18,6 @@ function Map({coords, center, zoom}) {
 
             marker.addListener("click", () => {
                 let content = document.createElement("div");
-                console.log(isRegular);
 
                 let ul = document.createElement("ul");
                 content.append(ul);
