@@ -16,15 +16,12 @@ function Map({coords, center, zoom, isRegular}) {
 
             marker.addListener("click", () => {
                 let content = document.createElement("div");
-                let h2 = document.createElement("h2");
-                h2.innerText = "Warehouse Info"
-                content.append(h2);
 
                 let ul = document.createElement("ul");
                 content.append(ul);
 
                 let address = document.createElement("li");
-                address.innerText = "Address: " + elem.name;
+                address.innerHTML = "Address: <strong>" + elem.name + "</strong>";
                 ul.append(address);
 
                 let priceLI = document.createElement("li");
