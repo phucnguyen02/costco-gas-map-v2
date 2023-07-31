@@ -4,7 +4,7 @@ import LocationInfoBox from './LocationInfoBox';
 import { RegularContext } from './Context';
 import './Map.css'
 
-function Map({coords, center, zoom}) {
+function Map({coords}) {
     const [locationInfo, setLocationInfo] = useState(null);
     const [isRegular, setRegular] = useContext(RegularContext);
     let infoWindow;
@@ -52,22 +52,14 @@ function Map({coords, center, zoom}) {
         <div className='map'>
             <GoogleMapReact
                 bootstrapURLKeys={{key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY}}
-                defaultCenter = { center }
-                defaultZoom = { zoom }
+                defaultCenter = { {lat: 33.352235, lng: -117.943683} }
+                defaultZoom = { 10.5 }
                 onGoogleApiLoaded={({ map, maps }) => renderMarkers(map, maps)}
             >
             </GoogleMapReact>
             {locationInfo && <LocationInfoBox info = {locationInfo} isRegular = {isRegular}/>}
         </div>
     ) 
-}
-
-Map.defaultProps = {
-    center: {
-        lat: 33.352235,
-        lng: -117.943683
-    },
-    zoom: 10.5
 }
 
 export default Map
