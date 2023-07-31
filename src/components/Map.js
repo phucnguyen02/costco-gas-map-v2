@@ -25,7 +25,6 @@ function Map({coords, center, zoom, isRegular}) {
                 ul.append(address);
 
                 let priceLI = document.createElement("li");
-                console.log(isRegular);
                 let price = isRegular ? elem.regular_gas : elem.premium_gas;
                 priceLI.innerText = "Price: " + price;
                 ul.append(priceLI);
