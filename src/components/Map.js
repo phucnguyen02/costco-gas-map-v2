@@ -17,7 +17,6 @@ function Map({coords}) {
             });
 
             marker.addListener("click", () => {
-                console.log(isRegular);
                 let content = document.createElement("div");
 
                 let ul = document.createElement("ul");
@@ -28,18 +27,13 @@ function Map({coords}) {
                 ul.append(address);
 
                 let priceLI = document.createElement("li");
-                let price = isRegular ? elem.regular_gas : elem.premium_gas;
+                let price = JSON.parse(localStorage.getItem("regular")) ? elem.regular_gas : elem.premium_gas;
                 priceLI.innerHTML = "Price: <strong>" + price + "</strong>";
                 ul.append(priceLI);
 
                 if(infoWindow) infoWindow.close();
                 infoWindow = new maps.InfoWindow({
                     content: content
-                })
-                setLocationInfo({
-                    name: elem.name,
-                    regular_gas: elem.regular_gas,
-                    premium_gas: elem.premium_gas
                 })
                 infoWindow.open(map, marker)
             })
@@ -58,7 +52,6 @@ function Map({coords}) {
                 onGoogleApiLoaded={({ map, maps }) => renderMarkers(map, maps)}
             >
             </GoogleMapReact>
-            {locationInfo && <LocationInfoBox info = {locationInfo} isRegular = {isRegular}/>}
         </div>
     ) 
 }
