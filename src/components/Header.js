@@ -2,10 +2,11 @@ import React, { useContext } from 'react'
 import { Icon } from '@iconify/react'
 import './Header.css'
 import ReactSwitch from 'react-switch'
-import { RegularContext } from './Context'
+import { RegularContext } from './RegularContext'
 
 function Header() {
-  const [isRegular, setRegular] = useContext(RegularContext);
+  const {isRegular, setRegular} = useContext(RegularContext);
+
   return (
     <header className='header'>
       <div className='title'>

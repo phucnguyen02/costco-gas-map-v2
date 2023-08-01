@@ -5,7 +5,7 @@ import Header from "./components/Header";
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 import axios from "axios";
-import { RegularContext } from './components/Context'
+import { RegularContext } from './components/RegularContext'
 
 const firebaseConfig = require('./firebaseConfig.json')
 const app = initializeApp(firebaseConfig);
@@ -55,8 +55,9 @@ function App() {
   useEffect(() => {
     localStorage.setItem("regular", isRegular);
   }, [isRegular])
+
   return (
-    <RegularContext.Provider value = {[isRegular, setRegular]}>
+    <RegularContext.Provider value = { {isRegular, setRegular} }>
       <Header/>
       { !loading ? <Map coords = {coords} />  : <Loader/>}
     </RegularContext.Provider>

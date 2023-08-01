@@ -1,12 +1,12 @@
 import React, {useState, useContext} from 'react'
 import GoogleMapReact from 'google-map-react'
 import LocationInfoBox from './LocationInfoBox';
-import { RegularContext } from './Context';
+import { RegularContext } from './RegularContext';
 import './Map.css'
 
 function Map({coords}) {
     const [locationInfo, setLocationInfo] = useState(null);
-    const [isRegular, setRegular] = useContext(RegularContext);
+    const { isRegular } = useContext(RegularContext);
     let infoWindow;
     const renderMarkers = (map, maps) => {
         let markers = [];
@@ -17,6 +17,7 @@ function Map({coords}) {
             });
 
             marker.addListener("click", () => {
+                console.log(isRegular);
                 let content = document.createElement("div");
 
                 let ul = document.createElement("ul");
