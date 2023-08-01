@@ -28,7 +28,7 @@ function Map({coords}) {
 
                 let priceLI = document.createElement("li");
                 let price = isRegular ? elem.regular_gas : elem.premium_gas;
-                priceLI.innerText = "Price: " + price;
+                priceLI.innerHTML = "Price: <strong>" + price + "</strong>";
                 ul.append(priceLI);
 
                 if(infoWindow) infoWindow.close();
