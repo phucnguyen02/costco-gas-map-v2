@@ -4,10 +4,16 @@
     transition: all 0.3s ease-out;
     position: relative;
     width: 40px;
+    padding-top: 0.5px;
+    padding-bottom: 0.5px;
     border-radius: 5px;
     color: white;
+    margin: auto;
 }
 
+.marker h2{
+    text-align: center;
+}
 .marker.highlight:after {
     opacity: 0;
     animation: fadeOut 0.5s;
