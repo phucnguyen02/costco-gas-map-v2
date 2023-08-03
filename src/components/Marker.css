@@ -6,4 +6,13 @@
     width: 40px;
     border-radius: 5px;
     color: white;
-  }
+}
+
+.marker.highlight:after {
+    opacity: 0;
+    animation: fadeOut 0.5s;
+}
+
+.highlight{
+    background: #ffc300;
+}

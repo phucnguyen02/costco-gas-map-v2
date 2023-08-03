@@ -18,7 +18,7 @@ function Map({coords}){
     return (
         <>
             <div ref = {ref} id = "map"/>
-            {map && <Gas coords = {coords} map = {map} />}
+            {map && <Gas coords = {coords} map = {map}/>}
         </>
     )
 }

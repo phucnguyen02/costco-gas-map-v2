@@ -1,7 +1,7 @@
 import {useEffect, useRef} from 'react'
 import {createRoot} from 'react-dom/client'
 import './Marker.css'
-function Marker({map, children, position}){
+function Marker({map, children, name, position, locationInfo, setLocationInfo}){
     const markerRef = useRef();
     const rootRef = useRef();
     useEffect(() => {
@@ -12,6 +12,9 @@ function Marker({map, children, position}){
             markerRef.current = new window.google.maps.marker.AdvancedMarkerView({
                 position,
                 content: container
+            })
+            markerRef.current.addListener("click", () => {
+                setLocationInfo({name: name})
             })
         }
     }, [])
