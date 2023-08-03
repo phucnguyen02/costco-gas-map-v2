@@ -1,0 +1,9 @@
+.marker {
+    padding: 0.5rem;
+    background: black;
+    transition: all 0.3s ease-out;
+    position: relative;
+    width: 40px;
+    border-radius: 5px;
+    color: white;
+  }

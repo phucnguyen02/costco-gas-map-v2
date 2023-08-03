@@ -6,6 +6,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 import axios from "axios";
 import { RegularContext } from './components/RegularContext'
+import { Wrapper } from '@googlemaps/react-wrapper'
 
 const firebaseConfig = require('./firebaseConfig.json')
 const app = initializeApp(firebaseConfig);
@@ -59,7 +60,11 @@ function App() {
   return (
     <RegularContext.Provider value = { {isRegular, setRegular} }>
       <Header/>
-      { !loading ? <Map coords = {coords} />  : <Loader/>}
+      { !loading ? 
+      <Wrapper apiKey = {process.env.REACT_APP_GOOGLE_MAPS_API_KEY} version = "beta" libraries = {["marker"]}>
+        <Map coords = {coords} />
+      </Wrapper> : 
+      <Loader/>}
     </RegularContext.Provider>
   );
 }
