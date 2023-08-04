@@ -1,17 +1,12 @@
 .marker {
-    padding: 0.5rem;
     background: black;
     transition: all 0.3s ease-out;
     position: relative;
-    width: 40px;
-    padding-top: 0.5px;
-    padding-bottom: 0.5px;
+    width: 25px;
+    height: 10px;
+    margin: auto;
     border-radius: 5px;
     color: white;
-    margin: auto;
-}
-
-.marker h2{
     text-align: center;
 }
 .marker.highlight:after {
