@@ -36,7 +36,8 @@ function App() {
               lng: data.geometry.location.lng
           },
           regular_gas: location.Regular_Gas,
-          premium_gas: location.Premium_Gas
+          premium_gas: location.Premium_Gas,
+          last_updated: location.Updated_Time
       }
       return info;
     }

@@ -7,6 +7,7 @@ function LocationInfoBox({ info}) {
         <h2>Warehouse Info</h2>
         <ul>
             <li>Address: <strong>{ info.name }</strong></li>
+            <li>Last Updated: <strong>{ info.last_updated}</strong></li>
         </ul>
     </div>
   )
