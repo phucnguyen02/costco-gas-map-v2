@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react'
 import Gas from './Gas'
-import './Map.css'
+import '../styles/Map.css'
 
 const mapOptions = {
     mapId: process.env.REACT_APP_GOOGLE_MAPS_PUBLIC_MAP_ID,
@@ -15,6 +15,7 @@ function Map({coords}){
     useEffect(() => {
         setMap(new window.google.maps.Map(ref.current, mapOptions))
     }, [])
+
     return (
         <>
             <div ref = {ref} id = "map"/>

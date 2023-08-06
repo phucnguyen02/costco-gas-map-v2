@@ -58,7 +58,7 @@ function App() {
     localStorage.setItem("regular", isRegular);
   }, [isRegular])
 
-  return (
+  return (    
     <RegularContext.Provider value = { {isRegular, setRegular} }>
       <Header/>
       { !loading ? 

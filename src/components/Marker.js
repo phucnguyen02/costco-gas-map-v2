@@ -1,6 +1,7 @@
 import {useEffect, useRef} from 'react'
 import {createRoot} from 'react-dom/client'
-import './Marker.css'
+import '../styles/Marker.css'
+
 function Marker({map, children, name, last_updated, position, locationInfo, setLocationInfo}){
     const markerRef = useRef();
     const rootRef = useRef();

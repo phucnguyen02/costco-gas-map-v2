@@ -1,5 +1,5 @@
 import React from 'react'
-import './LocationInfoBox.css'
+import '../styles/LocationInfoBox.css'
 
 function LocationInfoBox({ info}) {
   return (

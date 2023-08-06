@@ -1,0 +1,10 @@
+#map {
+  width: 100%;
+  height: 100vh;
+}
+
+.gps-input{
+  top: 50px;
+  left: 150px;
+  z-index: 100;
+}

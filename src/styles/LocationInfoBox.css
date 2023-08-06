@@ -9,13 +9,13 @@
     border-radius: 10px;
     font-size: 18px;
     color: white;
-  }
-  
-  .location-info ul{
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .location-info li{
-    padding: 5px 0;
-  }
+}
+
+.location-info ul{
+  list-style-type: none;
+  padding: 0;
+}
+
+.location-info li{
+  padding: 5px 0;
+}
