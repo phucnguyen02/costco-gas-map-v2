@@ -18,7 +18,7 @@ function Gas({coords, map}){
                             onMouseEnter = {() => setHighlight(index)}
                             onMouseLeave = {() => setHighlight(null)}
                         >
-                            <h6>{isRegular ? elem.regular_gas : elem.premium_gas}</h6>
+                            <h5>{isRegular ? elem.regular_gas : elem.premium_gas}</h5>
                         </div>
                     </Marker>
                 ))
