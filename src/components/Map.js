@@ -25,7 +25,6 @@ function Map({coords}){
             let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${state}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
             const response = await axios.get(url)
             const data = response.data.results[0]
-            console.log(data);
             if(data){
                 const info = {
                     position: {
@@ -44,7 +43,6 @@ function Map({coords}){
             let info = await getGeocode(centerState);
             if(info){
                 mapOptions.center = info.position;
-                console.log(info);
                 setMap(new window.google.maps.Map(ref.current, mapOptions))
             }
             
