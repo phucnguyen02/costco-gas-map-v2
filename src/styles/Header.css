@@ -17,6 +17,10 @@
   display: flex;
 }
 
+.center-state{
+  float: middle;
+}
+
 .toggle-btn{
   margin-left: 10px;
 }

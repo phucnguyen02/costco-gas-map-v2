@@ -6,6 +6,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 import axios from "axios";
 import { RegularContext } from './components/RegularContext'
+import { CenterContext } from './components/CenterContext'
 import { Wrapper } from '@googlemaps/react-wrapper'
 
 const firebaseConfig = require('./firebaseConfig.json')
@@ -13,6 +14,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 function App() {
+  const [centerState, setCenterState] = useState("California")
   const [coords, setCoords] = useState([])
   const [loading, setLoading] = useState(true)
   const [isRegular, setRegular] = useState(() => {
@@ -58,15 +60,19 @@ function App() {
     localStorage.setItem("regular", isRegular);
   }, [isRegular])
 
-  return (    
-    <RegularContext.Provider value = { {isRegular, setRegular} }>
-      <Header/>
-      { !loading ? 
-      <Wrapper apiKey = {process.env.REACT_APP_GOOGLE_MAPS_API_KEY} version = "beta" libraries = {["marker"]}>
-        <Map coords = {coords} />
-      </Wrapper> : 
-      <Loader/>}
-    </RegularContext.Provider>
+  return (
+    <CenterContext.Provider value = { {centerState,setCenterState} }>
+      <RegularContext.Provider value = { {isRegular, setRegular} }>
+        <Header/>
+        { !loading ? 
+          <Wrapper apiKey = {process.env.REACT_APP_GOOGLE_MAPS_API_KEY} version = "beta" libraries = {["marker"]}>
+            <Map coords = {coords} />
+          </Wrapper> : 
+          <Loader/>
+        }
+      </RegularContext.Provider>
+    </CenterContext.Provider>
+    
   );
 }
 
