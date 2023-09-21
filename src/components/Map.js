@@ -25,20 +25,29 @@ function Map({coords}){
             let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${state}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
             const response = await axios.get(url)
             const data = response.data.results[0]
-            const info = {
-                position: {
-                    lat: data.geometry.location.lat,
-                    lng: data.geometry.location.lng
+            console.log(data);
+            if(data){
+                const info = {
+                    position: {
+                        lat: data.geometry.location.lat,
+                        lng: data.geometry.location.lng
+                    }
                 }
+                return info;
             }
-            return info;
+            alert('Invalid state!')
+            return null
+            
         }
         
         const updateMapCenter = async () =>{
             let info = await getGeocode(centerState);
-            mapOptions.center = info.position;
-            console.log(info);
-            setMap(new window.google.maps.Map(ref.current, mapOptions))
+            if(info){
+                mapOptions.center = info.position;
+                console.log(info);
+                setMap(new window.google.maps.Map(ref.current, mapOptions))
+            }
+            
         }
 
         updateMapCenter();
