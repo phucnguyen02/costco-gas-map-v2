@@ -27,9 +27,9 @@ function Header() {
         <h1>Premium:</h1>
         <ReactSwitch onChange = {() => {setRegular(!isRegular)}} checked = {isRegular === false} className = 'toggle-btn'/>
       </div>
-      <div className = 'center-state'>
+      {/* <div className = 'center-state'>
         <input value = {stateInput} onChange = {changeStateInput} onKeyDown = {handleKeyDown}/>
-      </div>
+      </div> */}
       
     </header>
   )

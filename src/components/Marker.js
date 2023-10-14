@@ -2,7 +2,7 @@ import {useEffect, useRef} from 'react'
 import {createRoot} from 'react-dom/client'
 import '../styles/Marker.css'
 
-function Marker({map, children, name, last_updated, position, locationInfo, setLocationInfo}){
+function Marker({map, children, name, last_scraped, last_updated, position, locationInfo, setLocationInfo}){
     const markerRef = useRef();
     const rootRef = useRef();
     useEffect(() => {
@@ -17,7 +17,8 @@ function Marker({map, children, name, last_updated, position, locationInfo, setL
             markerRef.current.addListener("click", () => {
                 setLocationInfo({
                     name: name,
-                    last_updated: last_updated
+                    last_updated: last_updated,
+                    last_scraped: last_scraped
                 })
             })
         }

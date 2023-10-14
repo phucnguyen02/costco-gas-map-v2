@@ -12,7 +12,7 @@ function Gas({coords, map}){
         <>
             {
                 data.map((elem, index) => (
-                    <Marker key = {index} map = {map} name = {elem.name} last_updated = {elem.last_updated}
+                    <Marker key = {index} map = {map} name = {elem.name} last_scraped = {elem.last_scraped} last_updated = {elem.last_updated}
                     position = {elem.position} locationInfo = {locationInfo} setLocationInfo = {setLocationInfo}>
                         <div className = {`marker ${highlight === index ? "highlight" : ""}`}
                             onMouseEnter = {() => setHighlight(index)}

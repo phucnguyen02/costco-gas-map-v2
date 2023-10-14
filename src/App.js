@@ -14,13 +14,17 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 function App() {
-  const [centerState, setCenterState] = useState("California")
   const [coords, setCoords] = useState([])
   const [loading, setLoading] = useState(true)
   const [isRegular, setRegular] = useState(() => {
     const saved = localStorage.getItem("regular");
     const initialValue = JSON.parse(saved);
     return initialValue == null ? true : initialValue
+  })
+
+  const [centerState, setCenterState] = useState(() => {
+    const saved = localStorage.getItem("center");
+    return saved == null ? "California" : saved
   })
 
   useEffect(() => {
@@ -39,7 +43,8 @@ function App() {
           },
           regular_gas: location.Regular_Gas,
           premium_gas: location.Premium_Gas,
-          last_updated: location.Updated_Time
+          last_updated: location.Updated_Time,
+          last_scraped: location.Scraped_Time
       }
       return info;
     }
@@ -59,6 +64,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem("regular", isRegular);
   }, [isRegular])
+
+  useEffect(() => {
+    localStorage.setItem("center", centerState);
+  }, [centerState])
 
   return (
     <CenterContext.Provider value = { {centerState,setCenterState} }>
