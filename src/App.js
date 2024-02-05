@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import Map from "./components/Map";
 import Loader from "./components/Loader";
 import Header from "./components/Header";
+import Chatbox from "./components/Chatbox";
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 import axios from "axios";
 import { RegularContext } from './components/RegularContext'
-import { CenterContext } from './components/CenterContext'
 import { Wrapper } from '@googlemaps/react-wrapper'
 
 const firebaseConfig = require('./firebaseConfig.json')
@@ -20,11 +20,6 @@ function App() {
     const saved = localStorage.getItem("regular");
     const initialValue = JSON.parse(saved);
     return initialValue == null ? true : initialValue
-  })
-
-  const [centerState, setCenterState] = useState(() => {
-    const saved = localStorage.getItem("center");
-    return saved == null ? "California" : saved
   })
 
   useEffect(() => {
@@ -65,23 +60,19 @@ function App() {
     localStorage.setItem("regular", isRegular);
   }, [isRegular])
 
-  useEffect(() => {
-    localStorage.setItem("center", centerState);
-  }, [centerState])
-
   return (
-    <CenterContext.Provider value = { {centerState,setCenterState} }>
-      <RegularContext.Provider value = { {isRegular, setRegular} }>
-        <Header/>
-        { !loading ? 
-          <Wrapper apiKey = {process.env.REACT_APP_GOOGLE_MAPS_API_KEY} version = "beta" libraries = {["marker"]}>
-            <Map coords = {coords} />
-          </Wrapper> : 
-          <Loader/>
-        }
-      </RegularContext.Provider>
-    </CenterContext.Provider>
-    
+    <RegularContext.Provider value = { {isRegular, setRegular} }>
+      <Header/>
+      { !loading ? 
+        <Wrapper apiKey = {process.env.REACT_APP_GOOGLE_MAPS_API_KEY} version = "beta" libraries = {["marker"]}>
+          <Map coords = {coords} />
+          <Chatbox/>
+        </Wrapper> : 
+        <Loader/>
+      }
+      
+    </RegularContext.Provider>
+  
   );
 }
 

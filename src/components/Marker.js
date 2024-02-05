@@ -22,7 +22,7 @@ function Marker({map, children, name, last_scraped, last_updated, position, loca
                 })
             })
         }
-    }, [])
+    }, [last_scraped, last_updated, name, position, setLocationInfo])
 
     useEffect(() => {
         rootRef.current.render(children);
