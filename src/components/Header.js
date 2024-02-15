@@ -4,6 +4,7 @@ import '../styles/Header.css'
 import ReactSwitch from 'react-switch'
 import { RegularContext } from './RegularContext'
 
+
 function Header() {
   const {isRegular, setRegular} = useContext(RegularContext);
   return (

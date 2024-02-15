@@ -1,0 +1,31 @@
+.input-box{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 30px;
+}
+
+.chatbox{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 30px;
+    height: 85vh;
+}
+
+.message {
+    background: rgb(0, 24, 111);
+    border-radius: 6px;
+    margin-bottom: 24px;
+    max-width: 600px;
+    padding: 12px;
+}
+.msgMeta {
+    color: rgb(153, 217, 234);
+    font-size: 0.75rem;
+}
+.msgText {
+    color: #fff;
+}

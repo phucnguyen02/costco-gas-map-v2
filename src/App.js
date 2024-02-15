@@ -3,11 +3,13 @@ import Map from "./components/Map";
 import Loader from "./components/Loader";
 import Header from "./components/Header";
 import Chatbox from "./components/Chatbox";
+import { RegularContext } from './components/RegularContext'
+import { CoordsContext } from './components/CoordsContext'
+import { Wrapper } from '@googlemaps/react-wrapper'
+
+import axios from "axios";
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-import axios from "axios";
-import { RegularContext } from './components/RegularContext'
-import { Wrapper } from '@googlemaps/react-wrapper'
 
 const firebaseConfig = require('./firebaseConfig.json')
 const app = initializeApp(firebaseConfig);
@@ -39,7 +41,8 @@ function App() {
           regular_gas: location.Regular_Gas,
           premium_gas: location.Premium_Gas,
           last_updated: location.Updated_Time,
-          last_scraped: location.Scraped_Time
+          last_scraped: location.Scraped_Time,
+          map_highlight: false
       }
       return info;
     }
@@ -61,17 +64,18 @@ function App() {
   }, [isRegular])
 
   return (
-    <RegularContext.Provider value = { {isRegular, setRegular} }>
-      <Header/>
-      { !loading ? 
-        <Wrapper apiKey = {process.env.REACT_APP_GOOGLE_MAPS_API_KEY} version = "beta" libraries = {["marker"]}>
-          <Map coords = {coords} />
-          <Chatbox/>
-        </Wrapper> : 
-        <Loader/>
-      }
-      
-    </RegularContext.Provider>
+    <CoordsContext.Provider value = { {coords, setCoords }}>
+      <RegularContext.Provider value = { {isRegular, setRegular} }> 
+        <Header/>
+        { !loading ? 
+          <Wrapper apiKey = {process.env.REACT_APP_GOOGLE_MAPS_API_KEY} version = "beta" libraries = {["marker"]}>
+            <Map/>
+            <Chatbox/>
+          </Wrapper> : 
+          <Loader/>
+        }  
+      </RegularContext.Provider>
+    </CoordsContext.Provider>
   
   );
 }
