@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useContext, useRef } from 'react'
+import React, { useState, useEffect, useContext} from 'react'
 import axios from "axios";
 import '../styles/Chatbox.css'
 import { CoordsContext } from './CoordsContext'
+import { ChatlogContext } from './ChatlogContext'
+import MessageIcon from '@mui/icons-material/Message';
 
 function Chatbox(){
-    const [chatlog, setChatlog] = useState([]);
+    const [showChat, setShowChat] = useState(false);
     const [prompt, setPrompt] = useState("");
+    const {chatlog, setChatlog} = useContext(ChatlogContext);
     const {coords, setCoords} = useContext(CoordsContext);
-
-    const chatlogColumnRef = useRef(null);
-
     const handleSubmit = async (event) => {
         if(prompt !== ''){
+            setPrompt("");
             let newMessage = {
                 message: prompt,
                 role: "You",
@@ -46,14 +47,28 @@ function Chatbox(){
                 }
             }
             axios(configuration).then(res => {
-                console.log(res);
-                let promptAnswer = res.answer;
-                let chatResponse = {
-                    message: promptAnswer,
-                    role: "Website",
-                    __createdTime__: Date.now()
+                let chatResponse;
+                console.log(res.data);
+                if(res.data.hasOwnProperty('error')){
+                    
+                    chatResponse = {
+                        message: "I'm sorry, I do not understand what you said.",
+                        role: "Website",
+                        __createdTime__: Date.now()
+                    }
                 }
+                else{
+                    let promptAnswer = res.data.answer;
+                    chatResponse = {
+                        message: promptAnswer,
+                        role: "Website",
+                        __createdTime__: Date.now()
+                    }
+                }
+
                 setChatlog(chatlog => [...chatlog, chatResponse]);
+            }).catch(error => {
+                console.log(error);
             })
         }
 
@@ -61,6 +76,13 @@ function Chatbox(){
 
     function handlePromptChange({target}){
         setPrompt(target.value);
+    }
+
+    function handleShowChat(){
+        if(showChat === false)
+            setShowChat(true);
+        else
+            setShowChat(false);
     }
 
     function handleKeyDown(event){
@@ -73,42 +95,49 @@ function Chatbox(){
         return date.toLocaleString();
     }
 
-    // useEffect(() => {
-    //     chatlogColumnRef.current.scrollTop = chatlogColumnRef.current.scrollHeight;
-    // }, [chatlog]);
-
     return (
-        <div className = "chat">
-            {/* <div className = "chatbox">
-                {
-                    chatlog.map((msg, i) => (
-                        <div className='message' key = {i}>
-                            <div style = {{display: 'block'}}>
-                                <div style = {{display: 'flex', justifyContent: 'space-between'}}>
-                                    <span className='msgMeta'>{msg.role}</span>
-                                    <span className='msgMeta'>
-                                        {formatDateFromTimestamp(msg.__createdTime__)}
-                                    </span>
+        <div className="chat-menu">
+            <div className="showchat-button">
+                <button onClick={handleShowChat}>
+                    <MessageIcon/>
+                </button>
+            </div>
+            {
+                showChat ? 
+                <div className = "chat">
+                    <div className = "chatbox">
+                        {
+                            chatlog.map((msg, i) => (
+                                <div className='message' key = {i} style = {{float: msg.role === "Website" ? 'left' : 'right',
+                                textAlign: msg.role === "Website" ? 'left' : 'right'}}>
+                                    <div style = {{display: 'block'}}>
+                                        <div style = {{display: 'flex', justifyContent: 'space-between'}}>
+                                            <span className='msgMeta'>{msg.role}</span>
+                                            <span className='msgMeta'>
+                                                {formatDateFromTimestamp(msg.__createdTime__)}
+                                            </span>
+                                        </div>
+                                        
+                                        <p className='msgText'>{msg.message}</p>
+                                    </div>
+                                    <br/>
                                 </div>
-                                
-                                <p className='msgText'>{msg.message}</p>
-                            </div>
-                            <br/>
+                            ))
+                        }
+                    </div>
+                            
+                    <form onSubmit = {(e) => handleSubmit(e)}>
+                        <div className = "input-box">
+                            <input type = "text" placeholder = "Enter your prompt" value = {prompt} 
+                            onChange = {handlePromptChange} onKeyDown = {handleKeyDown}/>
+                            <button onClick = {(e) => handleSubmit(e)}>
+                                Submit
+                            </button>
                         </div>
-                    ))
-                }
-            </div> */}
-            
-            <form onSubmit = {(e) => handleSubmit(e)}>
-                <div className = "input-box">
-                    <input type = "text" placeholder = "Enter your prompt" value = {prompt} 
-                    onChange = {handlePromptChange} onKeyDown = {handleKeyDown}/>
-                    <button onClick = {(e) => handleSubmit(e)}>
-                        Submit
-                    </button>
-                </div>
-                
-            </form>
+                        
+                    </form>
+                </div> : null    
+            }
         </div>
     )
 }

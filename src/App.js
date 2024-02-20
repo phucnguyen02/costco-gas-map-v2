@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Chatbox from "./components/Chatbox";
 import { RegularContext } from './components/RegularContext'
 import { CoordsContext } from './components/CoordsContext'
+import { ChatlogContext } from './components/ChatlogContext'
 import { Wrapper } from '@googlemaps/react-wrapper'
 
 import axios from "axios";
@@ -17,11 +18,18 @@ const db = getFirestore(app);
 
 function App() {
   const [coords, setCoords] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+
   const [isRegular, setRegular] = useState(() => {
     const saved = localStorage.getItem("regular");
     const initialValue = JSON.parse(saved);
-    return initialValue == null ? true : initialValue
+    return initialValue === null ? true : initialValue
+  })
+
+  const [chatlog, setChatlog] = useState(() => {
+    const savedChat = localStorage.getItem("chatlog") || '[]';
+    const initialChatValue = JSON.parse(savedChat);
+    return initialChatValue;
   })
 
   useEffect(() => {
@@ -63,20 +71,25 @@ function App() {
     localStorage.setItem("regular", isRegular);
   }, [isRegular])
 
+  useEffect(() => {
+    localStorage.setItem("chatlog", JSON.stringify(chatlog));
+  }, [chatlog])
+
   return (
-    <CoordsContext.Provider value = { {coords, setCoords }}>
-      <RegularContext.Provider value = { {isRegular, setRegular} }> 
-        <Header/>
-        { !loading ? 
-          <Wrapper apiKey = {process.env.REACT_APP_GOOGLE_MAPS_API_KEY} version = "beta" libraries = {["marker"]}>
-            <Map/>
-            <Chatbox/>
-          </Wrapper> : 
-          <Loader/>
-        }  
-      </RegularContext.Provider>
-    </CoordsContext.Provider>
-  
+    <ChatlogContext.Provider value = { {chatlog, setChatlog} }>
+      <CoordsContext.Provider value = { {coords, setCoords }}>
+        <RegularContext.Provider value = { {isRegular, setRegular} }> 
+          <Header/>
+          { !loading ? 
+            <Wrapper apiKey = {process.env.REACT_APP_GOOGLE_MAPS_API_KEY} version = "beta" libraries = {["marker"]}>
+              <Map/>
+              <Chatbox/>
+            </Wrapper> : 
+            <Loader/>
+          }  
+        </RegularContext.Provider>
+      </CoordsContext.Provider>
+    </ChatlogContext.Provider>
   );
 }
 

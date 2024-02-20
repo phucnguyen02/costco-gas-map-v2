@@ -1,31 +1,49 @@
-.input-box{
+.showchat-button{
     position: fixed;
-    bottom: 0;
+    bottom: 0px;
     left: 0;
     right: 0;
-    font-size: 30px;
 }
 
-.chatbox{
-    position: fixed;
-    bottom: 0;
+.input-box{
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+}
+
+.chat{
+    position: absolute;
+    bottom: 50px;
     left: 0;
     right: 0;
     font-size: 30px;
-    height: 85vh;
+    width: 450px;
+    height: 250px;
+    background-color: white;
+    border-color: black;
+}
+
+.chatbox {
+    overflow-y: auto;
 }
 
 .message {
     background: rgb(0, 24, 111);
     border-radius: 6px;
     margin-bottom: 24px;
-    max-width: 600px;
-    padding: 12px;
+    width: 20vw;
+    height: 5vw;
+    padding: 5px;
+    overflow-wrap: anywhere;
 }
 .msgMeta {
     color: rgb(153, 217, 234);
-    font-size: 0.75rem;
+    font-size: 0.75vw;
+    padding: 5px;
 }
 .msgText {
     color: #fff;
+    font-size: 1vw;
+    padding: 5px;
 }
