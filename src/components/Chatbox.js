@@ -10,8 +10,10 @@ function Chatbox(){
     const [prompt, setPrompt] = useState("");
     const {chatlog, setChatlog} = useContext(ChatlogContext);
     const {coords, setCoords} = useContext(CoordsContext);
+    
     const handleSubmit = async (event) => {
         if(prompt !== ''){
+            // Adds the prompt to the chat log
             setPrompt("");
             let newMessage = {
                 message: prompt,
@@ -21,6 +23,8 @@ function Chatbox(){
 
             setChatlog(chatlog => [...chatlog, newMessage]);
             event.preventDefault();
+
+            // Geolocation to send to ChatGPT
             let address;
             if(navigator.geolocation){
                 navigator.geolocation.getCurrentPosition(
@@ -50,7 +54,6 @@ function Chatbox(){
                 let chatResponse;
                 console.log(res.data);
                 if(res.data.hasOwnProperty('error')){
-                    
                     chatResponse = {
                         message: "I'm sorry, I do not understand what you said.",
                         role: "Website",
