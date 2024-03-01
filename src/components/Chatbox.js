@@ -20,7 +20,7 @@ function Chatbox(){
                 role: "You",
                 __createdTime__: Date.now()
             }
-
+            
             setChatlog(chatlog => [...chatlog, newMessage]);
             event.preventDefault();
 
@@ -62,11 +62,19 @@ function Chatbox(){
                 }
                 else{
                     let promptAnswer = res.data.answer;
+                    let warehouseName = res.data.Warehouse_Info.Station_Name;
                     chatResponse = {
                         message: promptAnswer,
                         role: "Website",
                         __createdTime__: Date.now()
                     }
+                    let coordsCopy = coords;
+                    for(let i = 0; i<coordsCopy.length; i++){
+                        if(coordsCopy.name === warehouseName)
+                            coordsCopy[i].map_highlight = true;
+                    }
+                    setCoords(coordsCopy);
+
                 }
 
                 setChatlog(chatlog => [...chatlog, chatResponse]);
