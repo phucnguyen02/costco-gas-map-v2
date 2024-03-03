@@ -61,19 +61,24 @@ function Chatbox(){
                     }
                 }
                 else{
-                    let promptAnswer = res.data.answer;
+                    let promptAnswer = res.data.Prompt_Response;
                     let warehouseName = res.data.Warehouse_Info.Station_Name;
+                    console.log(warehouseName);
                     chatResponse = {
                         message: promptAnswer,
                         role: "Website",
                         __createdTime__: Date.now()
                     }
                     let coordsCopy = coords;
+                    console.log(coordsCopy);
                     for(let i = 0; i<coordsCopy.length; i++){
-                        if(coordsCopy.name === warehouseName)
+                        if(coordsCopy[i].name === warehouseName){
                             coordsCopy[i].map_highlight = true;
+                            console.log("Set map highlight");
+                        }
                     }
                     setCoords(coordsCopy);
+
 
                 }
 

@@ -41,7 +41,8 @@ function App() {
       const response = await axios.get(url)
       const data = response.data.results[0]
       const info = {
-          name: data.formatted_address,
+          name: location.Name,
+          address: data.formatted_address,
           position: {
               lat: data.geometry.location.lat,
               lng: data.geometry.location.lng
