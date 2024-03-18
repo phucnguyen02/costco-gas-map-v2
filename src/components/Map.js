@@ -1,8 +1,6 @@
-import React, {useState, useRef, useEffect, useContext} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import Gas from './Gas'
 import '../styles/Map.css'
-import { CoordsContext } from './CoordsContext'
-import Chatbox from './Chatbox'
 
 let mapOptions = {
     mapId: process.env.REACT_APP_GOOGLE_MAPS_PUBLIC_MAP_ID,
@@ -12,7 +10,6 @@ let mapOptions = {
 }
 
 function Map(){
-    const {coords, setCoords} = useContext(CoordsContext);
     const [map, setMap] = useState();
     const ref = useRef();
     useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext} from 'react'
+import React, { useState, useContext, useRef, useEffect } from 'react'
 import axios from "axios";
 import '../styles/Chatbox.css'
 import { CoordsContext } from './CoordsContext'
@@ -10,6 +10,8 @@ function Chatbox(){
     const [prompt, setPrompt] = useState("");
     const {chatlog, setChatlog} = useContext(ChatlogContext);
     const {coords, setCoords} = useContext(CoordsContext);
+
+    const messagesColumnRef = useRef(null);
     
     const handleSubmit = async (event) => {
         if(prompt !== ''){
@@ -17,7 +19,7 @@ function Chatbox(){
             setPrompt("");
             let newMessage = {
                 message: prompt,
-                role: "You",
+                role: "User",
                 __createdTime__: Date.now()
             }
             
@@ -52,25 +54,22 @@ function Chatbox(){
             }
             axios(configuration).then(res => {
                 let chatResponse;
-                console.log(res.data);
                 if(res.data.hasOwnProperty('error')){
                     chatResponse = {
-                        message: "I'm sorry, I do not understand what you said.",
-                        role: "Website",
+                        message: "I'm sorry, I do not understand what you said. Please ask prompts related to Costco gas stations like nearest station, appropriate gas type for your car, or gas trends.",
+                        role: "Gas Tracker Assistant",
                         __createdTime__: Date.now()
                     }
                 }
                 else{
                     let promptAnswer = res.data.Prompt_Response;
                     let warehouseName = res.data.Warehouse_Info.Station_Name;
-                    console.log(warehouseName);
                     chatResponse = {
                         message: promptAnswer,
-                        role: "Website",
+                        role: "Gas Tracker Assistant",
                         __createdTime__: Date.now()
                     }
                     let coordsCopy = coords;
-                    console.log(coordsCopy);
                     for(let i = 0; i<coordsCopy.length; i++){
                         if(coordsCopy[i].name === warehouseName){
                             coordsCopy[i].map_highlight = true;
@@ -78,8 +77,6 @@ function Chatbox(){
                         }
                     }
                     setCoords(coordsCopy);
-
-
                 }
 
                 setChatlog(chatlog => [...chatlog, chatResponse]);
@@ -95,10 +92,7 @@ function Chatbox(){
     }
 
     function handleShowChat(){
-        if(showChat === false)
-            setShowChat(true);
-        else
-            setShowChat(false);
+        setShowChat(!showChat);
     }
 
     function handleKeyDown(event){
@@ -111,6 +105,9 @@ function Chatbox(){
         return date.toLocaleString();
     }
 
+    useEffect(() => {
+        messagesColumnRef.scrollTop = messagesColumnRef.scrollHeight;
+    }, [chatlog])
     return (
         <div className="chat-menu">
             <div className="showchat-button">
@@ -120,12 +117,12 @@ function Chatbox(){
             </div>
             {
                 showChat ? 
-                <div className = "chat">
-                    <div className = "chatbox">
+                <div className = "chat" >
+                    <div className = "chatbox" ref = {messagesColumnRef}>
                         {
                             chatlog.map((msg, i) => (
-                                <div className='message' key = {i} style = {{float: msg.role === "Website" ? 'left' : 'right',
-                                textAlign: msg.role === "Website" ? 'left' : 'right'}}>
+                                <div className='message' key = {i} style = {{float: msg.role === "Gas Tracker Assistant" ? 'left' : 'right',
+                                textAlign: msg.role === "Gas Tracker Assistant" ? 'left' : 'right', background: msg.role === "Gas Tracker Assistant" ? 'lightgreen' : 'lightblue'}}>
                                     <div style = {{display: 'block'}}>
                                         <div style = {{display: 'flex', justifyContent: 'space-between'}}>
                                             <span className='msgMeta'>{msg.role}</span>
@@ -136,7 +133,6 @@ function Chatbox(){
                                         
                                         <p className='msgText'>{msg.message}</p>
                                     </div>
-                                    <br/>
                                 </div>
                             ))
                         }
