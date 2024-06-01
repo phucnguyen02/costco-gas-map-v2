@@ -40,18 +40,26 @@ function App() {
       let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${address},+${city},+${state}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
       const response = await axios.get(url)
       const data = response.data.results[0]
+      const lat = data.geometry.location.lat;
+      const lng = data.geometry.location.lng;
+
+      const streetview = `https://maps.googleapis.com/maps/api/streetview?size=300x250&location=${lat},${lng}&fov=80&heading=70&pitch=0&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
+      const res = await fetch(streetview);
+      const imageBlob = await res.blob();
+      const imageObjectURL = URL.createObjectURL(imageBlob);
       const info = {
           name: location.Name,
           address: data.formatted_address,
           position: {
-              lat: data.geometry.location.lat,
-              lng: data.geometry.location.lng
+              lat: lat,
+              lng: lng
           },
           regular_gas: location.Regular_Gas,
           premium_gas: location.Premium_Gas,
           last_updated: location.Updated_Time,
           last_scraped: location.Scraped_Time,
-          map_highlight: false
+          map_highlight: false,
+          streetview: imageObjectURL
       }
       return info;
     }
