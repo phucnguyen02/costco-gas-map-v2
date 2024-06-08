@@ -19,16 +19,6 @@ Costco Gas Price Tracker is a web application designed to help users find the la
 - **Maps**: Google Maps API
 - **AI Assistant**: ChatGPT with Retrieval Augmented Generation and LlamaIndex
 
-## Installation
-
-### Prerequisites
-- Node.js
-- npm (Node Package Manager)
-- Python
-- Google Cloud account
-- Firestore database
-- API keys for Google Maps and ChatGPT
-
 ### Setup
 - Clone the frontend repository https://github.com/phucnguyen02/costco-gas-map-v2. You can run it with ```npm start```.
 
