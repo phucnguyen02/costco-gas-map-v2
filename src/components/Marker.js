@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { setCurrentInfoWindow } from './GlobalInfoWindow';
 import '../styles/Marker.css'
 
-function Marker({ map, children, address, last_scraped, last_updated, position, locationInfo, setLocationInfo }) {
+function Marker({map, children, address, last_scraped, last_updated, position, locationInfo, setLocationInfo, streetview}){
     const markerRef = useRef();
 
     const rootRef = useRef();
@@ -65,7 +65,7 @@ function Marker({ map, children, address, last_scraped, last_updated, position, 
                 InfoWindow.open(map, markerRef.current);
             });
         }
-    }, [map, last_scraped, last_updated, address, position])
+    }, [last_scraped, last_updated, address, position, setLocationInfo, streetview])
 
     useEffect(() => {
         rootRef.current.render(children);

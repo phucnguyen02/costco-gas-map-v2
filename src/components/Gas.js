@@ -15,7 +15,7 @@ function Gas({map}){
                 coords.map((elem, index) => 
                     {
                         return <Marker key = {index} map = {map} address = {elem.address} last_scraped = {elem.last_scraped} last_updated = {elem.last_updated}
-                        position = {elem.position}>
+                        position = {elem.position} locationInfo = {locationInfo} setLocationInfo = {setLocationInfo} streetview = {elem.streetview}>
                             <div className = {`marker ${highlight === index ? "highlight" : ""} ${elem.map_highlight ? "chatbot-highlight" : ""}`}
                                 onMouseEnter = {() => setHighlight(index)}
                                 onMouseLeave = {() => setHighlight(null)}
