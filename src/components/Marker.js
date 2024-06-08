@@ -41,12 +41,7 @@ function Marker({map, children, address, last_scraped, last_updated, position, l
             // })
 
             markerRef.current.addListener('click', () => {
-                // setLocationInfo({
-                //     address,
-                //     last_updated,
-                //     last_scraped
-                // });
-
+                
                 // Location information
                 InfoWindow.setContent(`
                     <div class="feh-content">
