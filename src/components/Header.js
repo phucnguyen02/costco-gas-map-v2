@@ -10,7 +10,7 @@ function Header() {
   return (
     <header className='header'>
       <div className='title'>
-        <h1><Icon icon = "typcn:location" />Costco Gas Stations Map</h1>
+        <h1><Icon icon = "typcn:location" /> Costco Gas Stations Map</h1>
       </div>
       <div className = 'toggle-gas'>
         <h1>Premium:</h1>

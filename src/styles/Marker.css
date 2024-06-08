@@ -2,22 +2,50 @@
     background: black;
     transition: all 0.3s ease-out;
     position: relative;
-    width: 35px;
-    height: 10px;
+    width: 40px;
+    height: 15px;
     margin: auto;
     border-radius: 5px;
     color: white;
     text-align: center;
+    margin: 0 6px 35px 0;
 }
+
 .marker.highlight:after {
     opacity: 0;
     animation: fadeOut 0.5s;
 }
 
-.highlight{
+.highlight {
     background: #ffc300;
 }
 
-.chatbot-highlight{
+.chatbot-highlight {
     background: #32cd32;
+}
+
+/* Infor Location */
+.gm-style-iw.gm-style-iw-c {
+    height: 290px;
+    border-radius: 20px;
+}
+
+.feh-content {
+    border-radius: 20px;
+}
+
+.gm-style-iw-d {
+    margin-left: 6px;
+} 
+
+.feh-content p {
+    width: 260px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.feh-content img {
+    height: 130px;
+    width: 260px;
+    border-radius: 10px;
 }

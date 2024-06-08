@@ -1,26 +1,37 @@
-.showchat-button{
+.showchat-button {
     position: fixed;
-    bottom: 0px;
-    left: 0;
+    bottom: 30px;
+    left: 15px;
     right: 0;
+    /* width: 50px;
+    background-color: rgb(255, 255, 255); */
+    border-radius: 20px;
 }
 
-.input-box{
+.MuiButtonBase-root.MuiIconButton-root {
+    background-color: #ffffff;
+}
+
+.MuiButtonBase-root.MuiIconButton-root:hover {
+    background-color: rgb(202, 200, 197);
+}
+
+.input-box {
     position: absolute;
     bottom: 0px;
     left: 0;
     right: 0;
 }
 
-.chat{
+.chat {
     position: absolute;
-    bottom: 50px;
-    left: 0;
+    bottom: 100px;
+    left: 15px;
     right: 0;
-    font-size: 30px;
+    
     width: 450px;
     height: 250px;
-    background-color: lightgray;
+    background-color: rgb(255, 255, 255);
     border-color: black;
     border-radius: 15px;
     display: flex;
@@ -31,7 +42,6 @@
 .chatbox {
     overflow: auto;
     height: 230px;
-
 }
 
 .message {
@@ -39,17 +49,19 @@
     margin-bottom: 18px;
     margin-left: 5px;
     margin-right: 5px;
-    width: 20vw;
+    width: 15vw;
     min-height: 1vw;
     padding: 3px;
     overflow-wrap: anywhere;
 }
+
 .msgMeta {
     color: black;
     font-size: 0.75vw;
     font-family: fantasy;
     padding: 5px;
 }
+
 .msgText {
     color: #fff;
     font-size: 1vw;

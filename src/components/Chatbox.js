@@ -4,17 +4,18 @@ import '../styles/Chatbox.css'
 import { CoordsContext } from './CoordsContext'
 import { ChatlogContext } from './ChatlogContext'
 import MessageIcon from '@mui/icons-material/Message';
+import IconButton from '@mui/material/IconButton';
 
-function Chatbox(){
+function Chatbox() {
     const [showChat, setShowChat] = useState(false);
     const [prompt, setPrompt] = useState("");
-    const {chatlog, setChatlog} = useContext(ChatlogContext);
-    const {coords, setCoords} = useContext(CoordsContext);
+    const { chatlog, setChatlog } = useContext(ChatlogContext);
+    const { coords, setCoords } = useContext(CoordsContext);
 
     const messagesColumnRef = useRef(null);
-    
+
     const handleSubmit = async (event) => {
-        if(prompt !== ''){
+        if (prompt !== '') {
             // Adds the prompt to the chat log
             setPrompt("");
             let newMessage = {
@@ -22,13 +23,13 @@ function Chatbox(){
                 role: "User",
                 __createdTime__: Date.now()
             }
-            
+
             setChatlog(chatlog => [...chatlog, newMessage]);
             event.preventDefault();
 
             // Geolocation to send to ChatGPT
             let address;
-            if(navigator.geolocation){
+            if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     async (position) => {
                         const { latitude, longitude } = position.coords;
@@ -54,14 +55,14 @@ function Chatbox(){
             }
             axios(configuration).then(res => {
                 let chatResponse;
-                if(res.data.hasOwnProperty('error')){
+                if (res.data.hasOwnProperty('error')) {
                     chatResponse = {
                         message: "I'm sorry, I do not understand what you said. Please ask prompts related to Costco gas stations like nearest station, appropriate gas type for your car, or gas trends.",
                         role: "Gas Tracker Assistant",
                         __createdTime__: Date.now()
                     }
                 }
-                else{
+                else {
                     let promptAnswer = res.data.Prompt_Response;
                     let warehouseName = res.data.Warehouse_Info.Station_Name;
                     chatResponse = {
@@ -70,8 +71,8 @@ function Chatbox(){
                         __createdTime__: Date.now()
                     }
                     let coordsCopy = coords;
-                    for(let i = 0; i<coordsCopy.length; i++){
-                        if(coordsCopy[i].name === warehouseName){
+                    for (let i = 0; i < coordsCopy.length; i++) {
+                        if (coordsCopy[i].name === warehouseName) {
                             coordsCopy[i].map_highlight = true;
                             console.log("Set map highlight");
                         }
@@ -87,20 +88,20 @@ function Chatbox(){
 
     }
 
-    function handlePromptChange({target}){
+    function handlePromptChange({ target }) {
         setPrompt(target.value);
     }
 
-    function handleShowChat(){
+    function handleShowChat() {
         setShowChat(!showChat);
     }
 
-    function handleKeyDown(event){
-        if(event.key === 'Enter')
+    function handleKeyDown(event) {
+        if (event.key === 'Enter')
             handleSubmit(event);
     }
 
-    function formatDateFromTimestamp(timestamp){
+    function formatDateFromTimestamp(timestamp) {
         const date = new Date(timestamp);
         return date.toLocaleString();
     }
@@ -111,44 +112,46 @@ function Chatbox(){
     return (
         <div className="chat-menu">
             <div className="showchat-button">
-                <button onClick={handleShowChat}>
-                    <MessageIcon/>
-                </button>
+                <IconButton aria-label="icon-button" color='black' size='large' onClick={handleShowChat}>
+                    <MessageIcon className='icon' fontSize='inherit'/>
+                </IconButton>
             </div>
             {
-                showChat ? 
-                <div className = "chat" >
-                    <div className = "chatbox" ref = {messagesColumnRef}>
-                        {
-                            chatlog.map((msg, i) => (
-                                <div className='message' key = {i} style = {{float: msg.role === "Gas Tracker Assistant" ? 'left' : 'right',
-                                textAlign: msg.role === "Gas Tracker Assistant" ? 'left' : 'right', background: msg.role === "Gas Tracker Assistant" ? 'lightgreen' : 'lightblue'}}>
-                                    <div style = {{display: 'block'}}>
-                                        <div style = {{display: 'flex', justifyContent: 'space-between'}}>
-                                            <span className='msgMeta'>{msg.role}</span>
-                                            <span className='msgMeta'>
-                                                {formatDateFromTimestamp(msg.__createdTime__)}
-                                            </span>
+                showChat ?
+                    <div className="chat" >
+                        <div className="chatbox" ref={messagesColumnRef}>
+                            {
+                                chatlog.map((msg, i) => (
+                                    <div className='message' key={i} style={{
+                                        float: msg.role === "Gas Tracker Assistant" ? 'left' : 'right',
+                                        textAlign: msg.role === "Gas Tracker Assistant" ? 'left' : 'right', background: msg.role === "Gas Tracker Assistant" ? 'lightgreen' : 'lightblue'
+                                    }}>
+                                        <div style={{ display: 'block' }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                <span className='msgMeta'>{msg.role}</span>
+                                                <span className='msgMeta'>
+                                                    {formatDateFromTimestamp(msg.__createdTime__)}
+                                                </span>
+                                            </div>
+
+                                            <p className='msgText'>{msg.message}</p>
                                         </div>
-                                        
-                                        <p className='msgText'>{msg.message}</p>
                                     </div>
-                                </div>
-                            ))
-                        }
-                    </div>
-                            
-                    <form onSubmit = {(e) => handleSubmit(e)}>
-                        <div className = "input-box">
-                            <input type = "text" placeholder = "Enter your prompt" value = {prompt} 
-                            onChange = {handlePromptChange} onKeyDown = {handleKeyDown}/>
-                            <button onClick = {(e) => handleSubmit(e)}>
-                                Submit
-                            </button>
+                                ))
+                            }
                         </div>
-                        
-                    </form>
-                </div> : null    
+
+                        <form onSubmit={(e) => handleSubmit(e)}>
+                            <div className="input-box">
+                                <input type="text" placeholder="Enter your prompt" value={prompt}
+                                    onChange={handlePromptChange} onKeyDown={handleKeyDown} />
+                                <button onClick={(e) => handleSubmit(e)}>
+                                    Submit
+                                </button>
+                            </div>
+
+                        </form>
+                    </div> : null
             }
         </div>
     )

@@ -6,7 +6,7 @@ let mapOptions = {
     mapId: process.env.REACT_APP_GOOGLE_MAPS_PUBLIC_MAP_ID,
     center: {lat: 33.852235, lng: -117.943683},
     zoom: 10,
-    disableDefaultUI: true
+    disableDefaultUI: true,
 }
 
 function Map(){
