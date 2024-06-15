@@ -70,21 +70,13 @@ function Chatbox() {
                     }
                 }
                 else {
-                    let promptAnswer = res.data.Prompt_Response;
-                    let warehouseName = res.data.Warehouse_Info.Station_Name;
+                    let promptAnswer = res.data.response;
                     chatResponse = {
                         message: promptAnswer,
                         role: "Gas Tracker Assistant",
                         __createdTime__: Date.now()
                     }
-                    let coordsCopy = coords;
-                    for (let i = 0; i < coordsCopy.length; i++) {
-                        if (coordsCopy[i].name === warehouseName) {
-                            coordsCopy[i].map_highlight = true;
-                            console.log("Set map highlight");
-                        }
-                    }
-                    setCoords(coordsCopy);
+                    
                 }
 
                 setChatlog(chatlog => [...chatlog, chatResponse]);
