@@ -1,10 +1,10 @@
+/* Button show chat */
 .showchat-button {
     position: fixed;
     bottom: 30px;
     left: 15px;
     right: 0;
-    /* width: 50px;
-    background-color: rgb(255, 255, 255); */
+   
     border-radius: 20px;
 }
 
@@ -16,35 +16,42 @@
     background-color: rgb(202, 200, 197);
 }
 
-.input-box {
+.wrapper-input-box {
     position: absolute;
-    bottom: 0px;
+    bottom: -55px;
     left: 0;
     right: 0;
+    background-color: #b1cf86;
+}
+
+.input-box {
+    display: flex;
+    margin: 10px;
+    border: none;
 }
 
 .chat {
     position: absolute;
-    bottom: 100px;
+    bottom: 150px;
     left: 15px;
     right: 0;
-    
-    width: 450px;
-    height: 250px;
+    width: 400px;
+    height: 390px;
     background-color: rgb(255, 255, 255);
     border-color: black;
-    border-radius: 15px;
+    border-radius: 15px 15px 0 0;
     display: flex;
     flex-direction: column-reverse;
     overflow-anchor: auto !important;
 }
 
-.chatbox {
+/* .chatbox {
     overflow: auto;
-    height: 230px;
-}
+    height: 200px;
+} */
 
-.message {
+
+/* .message {
     border-radius: 6px;
     margin-bottom: 18px;
     margin-left: 5px;
@@ -53,20 +60,29 @@
     min-height: 1vw;
     padding: 3px;
     overflow-wrap: anywhere;
-}
+} */
 
-.msgMeta {
+/* .msgMeta {
     color: black;
     font-size: 0.75vw;
     font-family: fantasy;
     padding: 5px;
-}
+} */
 
-.msgText {
+/* .msgText {
     color: #fff;
     font-size: 1vw;
     font-family: 'Trebuchet MS', sans-serif;
     padding: 5px;
     margin-top: 3px;
     margin-bottom: 5px;
+} */
+
+/* Toggle */
+.toggle {
+    position: fixed;
+    bottom: 29px;
+    left: 70px;
+    right: 0;
+    width: 100%;
 }

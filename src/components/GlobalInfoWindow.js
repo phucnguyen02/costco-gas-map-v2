@@ -12,7 +12,3 @@ export function setCurrentInfoWindow(infoWindow) {
     }
     currentInfoWindow = infoWindow;
 }
-
-export function getCurrentInfoWindow() {
-    return currentInfoWindow;
-}

@@ -5,6 +5,13 @@ import { CoordsContext } from './CoordsContext'
 import { ChatlogContext } from './ChatlogContext'
 import MessageIcon from '@mui/icons-material/Message';
 import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Input from 'antd/es/input/Input';
+import SendIcon from '@mui/icons-material/Send';
+import ReactSwitch from 'react-switch';
+import { RegularContext } from './RegularContext';
 
 function Chatbox() {
     const [showChat, setShowChat] = useState(false);
@@ -85,7 +92,6 @@ function Chatbox() {
                 console.log(error);
             })
         }
-
     }
 
     function handlePromptChange({ target }) {
@@ -107,51 +113,132 @@ function Chatbox() {
     }
 
     useEffect(() => {
-        messagesColumnRef.scrollTop = messagesColumnRef.scrollHeight;
-    }, [chatlog])
+        if (showChat && messagesColumnRef.current) {
+            messagesColumnRef.current.scrollTop = messagesColumnRef.current.scrollHeight;
+        }
+    }, [chatlog, showChat]);
+
+    const { isRegular, setRegular } = useContext(RegularContext);
+
     return (
         <div className="chat-menu">
             <div className="showchat-button">
                 <IconButton aria-label="icon-button" color='black' size='large' onClick={handleShowChat}>
-                    <MessageIcon className='icon' fontSize='inherit'/>
+                    <MessageIcon className='icon' fontSize='inherit' />
                 </IconButton>
-            </div>
-            {
-                showChat ?
-                    <div className="chat" >
-                        <div className="chatbox" ref={messagesColumnRef}>
-                            {
-                                chatlog.map((msg, i) => (
-                                    <div className='message' key={i} style={{
-                                        float: msg.role === "Gas Tracker Assistant" ? 'left' : 'right',
-                                        textAlign: msg.role === "Gas Tracker Assistant" ? 'left' : 'right', background: msg.role === "Gas Tracker Assistant" ? 'lightgreen' : 'lightblue'
-                                    }}>
-                                        <div style={{ display: 'block' }}>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                <span className='msgMeta'>{msg.role}</span>
-                                                <span className='msgMeta'>
-                                                    {formatDateFromTimestamp(msg.__createdTime__)}
-                                                </span>
-                                            </div>
 
-                                            <p className='msgText'>{msg.message}</p>
-                                        </div>
-                                    </div>
-                                ))
-                            }
-                        </div>
-
-                        <form onSubmit={(e) => handleSubmit(e)}>
-                            <div className="input-box">
-                                <input type="text" placeholder="Enter your prompt" value={prompt}
-                                    onChange={handlePromptChange} onKeyDown={handleKeyDown} />
-                                <button onClick={(e) => handleSubmit(e)}>
-                                    Submit
-                                </button>
+                <div className='toggle'>
+                    <ReactSwitch
+                        width={150}
+                        onColor='#b1cf86'
+                        height={50}
+                        onChange={() => { setRegular(!isRegular) }} checked={isRegular === false}
+                        className='toggle-btn'
+                        checkedIcon={
+                            <div style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                height: "100%",
+                                fontSize: 15,
+                                fontWeight: 600,
+                                color: "white",
+                                paddingRight: 2,
+                                marginLeft: "30px",
+                            }}>
+                                Premium
                             </div>
+                        }
+                        uncheckedIcon={
+                            <div style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                position: "relative",
+                                left: "-28px",
+                                height: "100%",
+                                width: "100px",
+                                fontSize: 15,
+                                color: "white",
+                                fontWeight: 600,
+                            }}>
+                                Off Premium
+                            </div>
+                        }
+                    />
+                </div>
+            </div>
+            {showChat ?
+                <div className="chat">
+                    <Box ref={messagesColumnRef} sx={{ flexGrow: 1, overflowY: 'auto' }} >
+                        {chatlog.map((msg, i) => (
+                            <Box
+                                key={i}
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: msg.role === 'Gas Tracker Assistant' ? 'flex-start' : 'flex-end',
+                                    mb: 1,
+                                }}
+                            >
+                                <Typography
+                                    variant="caption"
+                                    color="textSecondary"
+                                    sx={{
+                                        margin: "15px 15px 0 0"
+                                    }}
+                                >
+                                    {msg.role} - {formatDateFromTimestamp(msg.__createdTime__)}
+                                </Typography>
 
-                        </form>
-                    </div> : null
+                                <Typography
+                                    variant="body1"
+                                    sx={{
+                                        bgcolor: msg.role === 'Gas Tracker Assistant' ? 'lightgreen' : '#b7e1cd',
+                                        p: 1,
+                                        borderRadius: 5,
+                                        margin: "1px 15px 5px 0",
+                                        maxWidth: "80%"
+                                    }}
+                                >
+                                    {msg.message}
+                                </Typography>
+                            </Box>
+                        ))}
+                    </Box>
+
+                    <form onSubmit={(e) => handleSubmit(e)} style={{ flexShrink: 0 }}>
+                        <div className="wrapper-input-box">
+                            <div className="input-box" style={{ display: 'flex', alignItems: 'center' }}>
+                                <Input
+                                    fullWidth
+                                    placeholder="Enter your prompt"
+                                    value={prompt}
+                                    onChange={handlePromptChange}
+                                    onKeyDown={handleKeyDown}
+                                    style={{
+                                        marginRight: 10,
+                                        borderRadius: 20,
+                                    }}
+                                />
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    onClick={(e) => handleSubmit(e)}
+                                    sx={{
+                                        borderRadius: 5,
+                                        backgroundColor: "#0b8043",
+                                        '&:hover': {
+                                            backgroundColor: "#066732"
+                                        }
+                                    }}
+                                >
+                                    <SendIcon />
+                                </Button>
+                            </div>
+                        </div>
+                    </form>
+                </div> : null
             }
         </div>
     )
