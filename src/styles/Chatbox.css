@@ -4,7 +4,6 @@
     bottom: 30px;
     left: 15px;
     right: 0;
-   
     border-radius: 20px;
 }
 
@@ -39,7 +38,7 @@
     height: 390px;
     background-color: rgb(255, 255, 255);
     border-color: black;
-    border-radius: 15px 15px 0 0;
+    border-radius: 0 15px 0 0;
     display: flex;
     flex-direction: column-reverse;
     overflow-anchor: auto !important;
