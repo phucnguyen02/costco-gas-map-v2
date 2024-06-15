@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { setCurrentInfoWindow } from './GlobalInfoWindow';
 import '../styles/Marker.css'
 
-function Marker({map, children, address, last_scraped, last_updated, position, locationInfo, setLocationInfo, streetview}){
+function Marker({map, children, address, last_scraped, last_updated, position, streetview}){
     const markerRef = useRef();
 
     const rootRef = useRef();
@@ -15,7 +15,7 @@ function Marker({map, children, address, last_scraped, last_updated, position, l
     });
 
     // Icon Marker
-    const iconMarker = '/Vector.png';
+    const iconMarker = '/GasIcon.png';
 
     useEffect(() => {
         if (!rootRef.current) {
@@ -45,7 +45,7 @@ function Marker({map, children, address, last_scraped, last_updated, position, l
                 // Location information
                 InfoWindow.setContent(`
                     <div class="feh-content">
-                        <img src="/thumbnail.jpg" alt="Image describing location">
+                        <img src= "${streetview}" alt="./alt-pic.jpeg">
                         <h2>Warehouse Info</h2>
                         <p>Address: ${address}</p> 
                         <p>Last Updated: ${last_updated}</p>
@@ -60,7 +60,7 @@ function Marker({map, children, address, last_scraped, last_updated, position, l
                 InfoWindow.open(map, markerRef.current);
             });
         }
-    }, [last_scraped, last_updated, address, position, setLocationInfo, streetview])
+    }, [last_scraped, last_updated, address, position, streetview])
 
     useEffect(() => {
         rootRef.current.render(children);
