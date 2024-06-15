@@ -70,13 +70,21 @@ function Chatbox() {
                     }
                 }
                 else {
-                    let promptAnswer = res.data.response;
+                    let promptAnswer = res.data.Prompt_Response;
+                    let warehouseName = res.data.Warehouse_Info.Station_Name;
                     chatResponse = {
                         message: promptAnswer,
                         role: "Gas Tracker Assistant",
                         __createdTime__: Date.now()
                     }
-                    
+                    let coordsCopy = coords;
+                    for (let i = 0; i < coordsCopy.length; i++) {
+                        if (coordsCopy[i].name === warehouseName) {
+                            coordsCopy[i].map_highlight = true;
+                            console.log("Set map highlight");
+                        }
+                    }
+                    setCoords(coordsCopy);
                 }
 
                 setChatlog(chatlog => [...chatlog, chatResponse]);
@@ -177,7 +185,7 @@ function Chatbox() {
                                     variant="caption"
                                     color="textSecondary"
                                     sx={{
-                                        margin: "15px 15px 0 0"
+                                        margin: "15px 15px 0 15px"
                                     }}
                                 >
                                     {msg.role} - {formatDateFromTimestamp(msg.__createdTime__)}
@@ -189,7 +197,7 @@ function Chatbox() {
                                         bgcolor: msg.role === 'Gas Tracker Assistant' ? 'lightgreen' : '#b7e1cd',
                                         p: 1,
                                         borderRadius: 5,
-                                        margin: "1px 15px 5px 0",
+                                        margin: "1px 15px 5px 15px",
                                         maxWidth: "80%"
                                     }}
                                 >
